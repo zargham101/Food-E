@@ -40,7 +40,7 @@ export default function MyOrder() {
 
       <div className="container">
         <div className="row">
-          {orderData !== {}
+          {orderData
             ? Array(orderData).map((data) => {
                 return data.orderData
                   ? data.orderData.order_data
