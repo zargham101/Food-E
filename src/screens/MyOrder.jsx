@@ -17,6 +17,7 @@ export default function MyOrder() {
       body: JSON.stringify({
         email: localStorage.getItem("userEmail"),
       }),
+      credentials: "include",
     }).then(async (res) => {
       let response = await res.json();
       await setorderData(response);

@@ -17,6 +17,7 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     response = await response.json();

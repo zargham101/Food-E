@@ -28,6 +28,7 @@ export default function SignUp() {
           password: credentials.password,
           location: credentials.location,
         }),
+        credentials: "include",
       });
 
       const json = await response.json();

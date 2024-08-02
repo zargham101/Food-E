@@ -21,6 +21,7 @@ export default function Login() {
           email: credentials.email,
           password: credentials.password,
         }),
+        credentials: "include",
       });
 
       const json = await response.json();

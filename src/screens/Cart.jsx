@@ -34,6 +34,7 @@ export default function Cart() {
         email: userEmail,
         order_date: new Date().toDateString(),
       }),
+      credentials: "include",
     });
     console.log("JSON RESPONSE:::::", response.status);
     if (response.status === 200) {
