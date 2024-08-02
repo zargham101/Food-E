@@ -3,34 +3,29 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import config from "../config";
+// import Carousel from '../components/Carousel'
 import { useState, useEffect } from "react";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [foodCategory, setFoodCategory] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const foodData = async () => {
-    setIsLoading(true);
-    try {
-      let response = await fetch(`${config.API_URL}/api/foodData`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+    let response = await fetch(`${config.API_URL}/api/foodData`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-      response = await response.json();
+    response = await response.json();
 
-      setFoodItem(response[0]);
-      setFoodCategory(response[1]);
-    } catch (error) {
-      console.error("Error fetching food data:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    setFoodItem(response[0]);
+    setFoodCategory(response[1]);
+
+    // console.log(response[0], response[1]);
   };
 
   useEffect(() => {
@@ -61,6 +56,7 @@ export default function Home() {
                       setSearch(e.target.value);
                     }}
                   />
+                  {/* <button className="btn btn-outline-success text-white bg-success" type="submit">Search</button> */}
                 </div>
               </div>
               <div className="carousel-item active">
@@ -71,6 +67,7 @@ export default function Home() {
                   style={{ filter: "brightness(30%)" }}
                 />
               </div>
+
               <div className="carousel-item">
                 <img
                   src="https://images.pexels.com/photos/7363933/pexels-photo-7363933.jpeg"
@@ -79,6 +76,7 @@ export default function Home() {
                   style={{ filter: "brightness(30%)" }}
                 />
               </div>
+
               <div className="carousel-item">
                 <img
                   src="https://images.pexels.com/photos/5409010/pexels-photo-5409010.jpeg"
@@ -116,13 +114,13 @@ export default function Home() {
         </div>
 
         <div className="container">
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : foodCategory.length > 0 ? (
+          {foodCategory.length > 0 ? (
             foodCategory.map((data) => {
               return (
-                <div key={data._id} className="row mb-3">
-                  <div className="fs-3 m-3">{data.CategoryName}</div>
+                <div className="row mb-3 ">
+                  <div key={data._id} className="fs-3 m-3">
+                    {data.CategoryName}
+                  </div>
                   <hr />
                   {foodItem.length > 0 ? (
                     foodItem
@@ -140,21 +138,24 @@ export default function Home() {
                             <Card
                               foodItem={filterItems}
                               options={filterItems.options[0]}
-                            />
+                            ></Card>
                           </div>
                         );
                       })
                   ) : (
-                    <div>No items found in this category</div>
+                    <div>No data found</div>
                   )}
                 </div>
               );
             })
           ) : (
-            <div>No categories found</div>
+            <div>hello world</div>
           )}
+          {/* <Card /> */}
         </div>
-        <Footer />
+        <div>
+          <Footer />
+        </div>
       </div>
     </div>
   );
