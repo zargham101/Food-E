@@ -11,7 +11,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:5000/api/loginuser", {
+            const response = await fetch("https://food-e-server-lcwztc42i-zargham101s-projects.vercel.app/loginuser", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
