@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import config from "../config";
-// import Carousel from '../components/Carousel'
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -12,20 +11,22 @@ export default function Home() {
   const [foodItem, setFoodItem] = useState([]);
 
   const foodData = async () => {
-    let response = await fetch(`${config.API_URL}/api/foodData`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
+    try {
+      let response = await fetch(`${config.API_URL}/api/foodData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
-    response = await response.json();
+      response = await response.json();
 
-    setFoodItem(response[0]);
-    setFoodCategory(response[1]);
-
-    // console.log(response[0], response[1]);
+      setFoodItem(response[0]);
+      setFoodCategory(response[1]);
+    } catch (error) {
+      console.error("Error fetching food data:", error);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +57,6 @@ export default function Home() {
                       setSearch(e.target.value);
                     }}
                   />
-                  {/* <button className="btn btn-outline-success text-white bg-success" type="submit">Search</button> */}
                 </div>
               </div>
               <div className="carousel-item active">
@@ -114,15 +114,13 @@ export default function Home() {
         </div>
 
         <div className="container">
-          {foodCategory.length > 0 ? (
+          {foodCategory && foodCategory.length > 0 ? (
             foodCategory.map((data) => {
               return (
-                <div className="row mb-3 ">
-                  <div key={data._id} className="fs-3 m-3">
-                    {data.CategoryName}
-                  </div>
+                <div className="row mb-3 " key={data._id}>
+                  <div className="fs-3 m-3">{data.CategoryName}</div>
                   <hr />
-                  {foodItem.length > 0 ? (
+                  {foodItem && foodItem.length > 0 ? (
                     foodItem
                       .filter(
                         (item) =>
@@ -149,9 +147,8 @@ export default function Home() {
               );
             })
           ) : (
-            <div>hello world</div>
+            <div>Loading...</div>
           )}
-          {/* <Card /> */}
         </div>
         <div>
           <Footer />
